@@ -19,7 +19,7 @@ object TFRecordFileReader {
     file: PartitionedFile,
     schema: StructType): Iterator[InternalRow] = {
 
-    val recordType = options.getOrElse("recordType", "Example")
+    val recordType = TFRecordOptions.getOrElse(options, "recordType", "Example")
 
     val inputSplit = new FileSplit(
       file.toPath,

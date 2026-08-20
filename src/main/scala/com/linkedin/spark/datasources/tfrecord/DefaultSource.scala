@@ -32,7 +32,7 @@ class DefaultSource extends FileFormat with DataSourceRegister {
       sparkSession: SparkSession,
       options: Map[String, String],
       files: Seq[FileStatus]): Option[StructType] = {
-    val recordType = options.getOrElse("recordType", "Example")
+    val recordType = TFRecordOptions.getOrElse(options, "recordType", "Example")
     files.collectFirst {
       case f if hasSchema(sparkSession, f, recordType) => getSchemaFromFile(sparkSession, f, recordType)
     }
