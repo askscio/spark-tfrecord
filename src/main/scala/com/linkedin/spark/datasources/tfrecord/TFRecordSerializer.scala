@@ -11,7 +11,7 @@ import com.google.protobuf.ByteString
  */
 class TFRecordSerializer(dataSchema: StructType) {
 
-  private val featureConverters = dataSchema.map(_.dataType).map(newFeatureConverter(_)).toArray
+  private val featureConverters = dataSchema.fields.map(_.dataType).map(newFeatureConverter(_)).toArray
 
   def serializeByteArray(row: InternalRow): Array[Byte] = {
     row.getBinary(0)
