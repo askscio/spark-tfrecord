@@ -19,7 +19,7 @@ class TFRecordOutputWriter(
   private val outputStream = CodecStreams.createOutputStream(context, new Path(path))
   private val dataOutputStream = new DataOutputStream(outputStream)
   private val writer = new TFRecordWriter(dataOutputStream)
-  private val recordType = options.getOrElse("recordType", "Example")
+  private val recordType = TFRecordOptions.getOrElse(options, "recordType", "Example")
 
   private[this] val serializer = new TFRecordSerializer(dataSchema)
 

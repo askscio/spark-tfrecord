@@ -181,6 +181,18 @@ class TFRecordIOSuite extends SharedSparkSessionSuite {
       assert(expectedRows === actualRows)
     }
 
+    "Test tfrecord option keys case-insensitively" in {
+
+      val path = s"$TF_SANDBOX_DIR/caseInsensitiveOptions.tfrecord"
+
+      val df: DataFrame = createDataFrameForByteArrayTFRecords()
+      df.write.format("tfrecord").option("recordtype", "ByteArray").save(path)
+
+      val importedDf: DataFrame = spark.read.format("tfrecord").option("recordtype", "ByteArray").load(path)
+
+      assert(df.collect() === importedDf.collect())
+    }
+
     "Test tfrecord write overwrite mode " in {
 
       val path = s"$TF_SANDBOX_DIR/example_overwrite.tfrecord"
